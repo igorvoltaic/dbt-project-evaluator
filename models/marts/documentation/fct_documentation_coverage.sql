@@ -23,7 +23,11 @@ final as (
         {{ dbt.current_timestamp() if target.type != 'trino' else 'current_timestamp(6)' }} as measured_at,
         cast(count(*) as {{ dbt.type_int() }}) as total_models,
         cast(sum(is_described_model) as {{ dbt.type_int() }}) as documented_models,
-        round(sum(is_described_model) * 100.00 / count(*), 2) as documentation_coverage_pct,
+        {% if target.type == 'clickhouse'  %}
+          cast(round(sum(is_described_model) * 100.00 / count(*), 2) as decimal(10, 2))
+        {% else  %}
+          round(sum(is_described_model) * 100.00 / count(*), 2)
+        {% endif %} as documentation_coverage_pct,
         {% for model_type in var('model_types') %}
             round(
                 {{ dbt_utils.safe_divide(

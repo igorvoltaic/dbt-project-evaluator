@@ -14,6 +14,7 @@ seeds:
     config:
       column_types:
         staging_documentation_coverage_pct: &float "{{ 'float' if target.type not in ['athena', 'databricks', 'duckdb','trino', 'spark'] else 'decimal(10,2)' }}"
+        documentation_coverage_pct: "{{ 'float' if target.type not in ['athena', 'databricks', 'duckdb','trino', 'spark', 'clickhouse'] else 'decimal(10,2)' }}"
         intermediate_documentation_coverage_pct: *float
         marts_documentation_coverage_pct: *float
         other_documentation_coverage_pct: *float

@@ -11,7 +11,7 @@ final as (
     select
         parent,
         child, -- the model with potentially long run time / compilation time, improve performance by breaking the upstream chain of views
-        distance,
+        cast(distance as {{ dbt.type_int() }}) as distance,
         path
     from all_relationships
     where is_dependent_on_chain_of_views

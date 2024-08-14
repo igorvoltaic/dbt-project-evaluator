@@ -23,7 +23,7 @@ final as (
         parent_resource_type,
         parent as parent_resource_name,
         child as exposure_name,
-        parent_materialized as parent_model_materialization
+        coalesce(parent_materialized, '') as parent_model_materialization
 
     from direct_exposure_relationships
 

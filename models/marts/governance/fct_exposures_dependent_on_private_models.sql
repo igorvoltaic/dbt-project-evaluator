@@ -17,7 +17,7 @@ final as (
     select 
         child as exposure_name,
         parent as parent_resource_name,
-        parent_access,
+        coalesce(parent_access, '') as parent_access,
         parent_resource_type
 
     from direct_exposure_relationships
